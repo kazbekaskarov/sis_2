@@ -1,0 +1,10 @@
+
+Running 5 tests using 4 workers
+
+  ok 1 [chromium] › tests\register.spec.ts:4:5 › registers a new customer who can then sign in (7.3s)
+  ok 4 [chromium] › tests\compare-products.spec.ts:7:5 › compares two products by captured name and price (7.6s)
+  ok 3 [chromium] › tests\login.spec.ts:6:5 › login accepts valid credentials and rejects invalid ones (8.6s)
+  ok 5 [chromium] › tests\reset-password.spec.ts:8:5 › reset password confirms a known email and rejects an invalid one (2.1s)
+  ok 2 [chromium] › tests\buy-product.spec.ts:16:5 › buys a product: add to cart, verify item and quantity, complete checkout (20.6s)
+
+  5 passed (21.8s)
