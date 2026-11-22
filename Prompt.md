@@ -1,5 +1,7 @@
 # Prompts Used (SIS 2)
 
+> This file covers the Playwright test suite. The prompts, model and error log for the CI pipeline are in [AI_USAGE_SIS2.md](AI_USAGE_SIS2.md).
+
 ## AI tool used
 
 | Item | Value |
