@@ -47,8 +47,11 @@ jobs:
               php artisan migrate:fresh --seed --force && break
             echo "database not ready yet ($i/30)"; sleep 5
           done
+          echo "waiting for API on :8091"
           curl -sf --retry 60 --retry-delay 5 --retry-all-errors -o /dev/null http://localhost:8091/products
+          echo "waiting for UI on :4200"
           curl -sf --retry 60 --retry-delay 5 --retry-all-errors -o /dev/null http://localhost:4200
+          echo "Toolshop is up"
 
       - name: Run Playwright tests
         run: npx playwright test --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
