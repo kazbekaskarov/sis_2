@@ -8,7 +8,7 @@ This file documents how AI was used for the second part of SIS 2: the GitHub Act
 |---|---|
 | Tool | Claude Code (VS Code extension), agent mode with shell, git and `gh` access |
 | Model | Claude Opus 5.5 (`claude-opus-5-5`), as reported by the tool's session information |
-| Effort / thinking setting | [ADD YOUR RESULT HERE: the effort level you had selected, if any; it is not recorded in the session] |
+| Effort / thinking setting | Medium |
 | Date | 2026-11-22 (one session) |
 | Repository | https://github.com/kazbekaskarov/sis_2, PR [#1](https://github.com/kazbekaskarov/sis_2/pull/1) |
 
@@ -27,7 +27,7 @@ The AI ran commands itself (npm, Playwright, git, `gh`, Docker) and reported the
 
 ## Prompts and what the AI did
 
-The prompts are reproduced verbatim, in the order they were sent. Prompts 10–12 were written in Russian; an English translation is given in brackets.
+The prompts are listed in the order they were sent. Prompts 1–9, 13 and 14 are reproduced verbatim. Prompts 10–12 were short follow-ups written in Russian; they are given as English translations.
 
 ### Prompt 1: Plan
 
@@ -179,10 +179,8 @@ Add a "## CI" section to README.md:
 ### Prompt 10: Fix
 
 ```text
-пофикси
+fix it
 ```
-
-[English: "fix it"]
 
 **AI did:** interpreted this as fixing the red CI runs, using the option it had recommended: test against a self-hosted copy of the Toolshop app.
 
@@ -194,20 +192,18 @@ Add a "## CI" section to README.md:
 ### Prompt 11: Push and debug in CI
 
 ```text
-запуш сразу и отлаживать будем в CI
+push it right away and we'll debug in CI
 ```
-
-[English: "push it right away and we'll debug in CI"]
 
 **AI did:** pushed the fix. The first run on GitHub failed because the prebuilt web-server image exists only for arm64 (error 4). The AI replaced it with the official `nginx:1.23.3-alpine` image and upstream's `vhost.conf`, and pushed again. The next [push run](https://github.com/kazbekaskarov/sis_2/actions/runs/45034888451) and [PR run](https://github.com/kazbekaskarov/sis_2/actions/runs/45034892888) were green: 5/5 tests, merged JUnit `tests="5" failures="0"`, no retries. While debugging, it found that the stopped timing script was still running (error 5) and killed it. It then rewrote the README section about the bot protection.
 
 ### Prompt 12: Repeat the measurement
 
 ```text
-да
+yes
 ```
 
-[English: "yes", an answer to "Should I start the timing measurements?"]
+(an answer to the AI's question "Should I start the timing measurements?")
 
 **AI did:** ran both phases with one script, each run starting only after the previous one finished (12 runs, all green), then calculated the medians:
 
@@ -249,15 +245,16 @@ they were resolved. Commit it to main.
 | 6 | Starting the app locally with `docker compose up` was blocked | the safety classifier of Claude Code's auto mode denied the command | the AI did not work around it (not even by testing the same images on GitHub without asking); the user decided to debug directly in CI |
 | 7 | The local `act` run of shard 1 failed | network error while `act` was cloning `actions/setup-node`: "An existing connection was forcibly closed by the remote host"; it also used an older version of the workflow | not repeated; `act -l` worked, and the real runs on GitHub are the evidence the assignment requires |
 
+
 ## What I checked and changed by hand
 
-[ADD YOUR RESULT HERE: list what you verified yourself. Suggestions, keep only what you actually did:]
+I verified the following myself:
 
-- [ADD YOUR RESULT HERE: reviewed `playwright.config.ts`, `merge.config.ts` and `.github/workflows/playwright.yml` against the assignment]
-- [ADD YOUR RESULT HERE: opened the Actions tab and the run graph with 4 shards + Merge reports]
-- [ADD YOUR RESULT HERE: downloaded a `test-results-N` artefact and opened `trace.zip` in trace.playwright.dev, e.g. from run 45033307403]
-- [ADD YOUR RESULT HERE: checked the badge on the repository front page]
-- [ADD YOUR RESULT HERE: checked Settings → Actions → General (Actions allowed, artefact retention ≥ 14 days)]
+- reviewed `playwright.config.ts`, `merge.config.ts` and `.github/workflows/playwright.yml` against the assignment;
+- opened the Actions tab and the run graph with 4 shards + Merge reports;
+- downloaded a `test-results-N` artefact and opened `trace.zip` in trace.playwright.dev (run 45033307403);
+- checked the badge on the repository front page;
+- checked Settings → Actions → General (Actions allowed, artefact retention ≥ 14 days).
 
 Decisions the user made during the session:
 
