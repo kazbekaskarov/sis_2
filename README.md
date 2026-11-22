@@ -4,11 +4,12 @@ Automated tests (TypeScript, `@playwright/test`) for https://practicesoftwaretes
 
 ## Install and run
 
-Requires Node.js 18 or newer.
+Requires Node.js 20 or 22 LTS.
 
 ```bash
-npm install            # also downloads Chromium (postinstall)
-npx playwright test    # runs all tests in parallel
+npm ci                              # installs the exact versions from package-lock.json
+npx playwright install chromium     # downloads the browser (add --with-deps on Linux)
+npx playwright test                 # runs all tests in parallel
 npx playwright show-report   # opens the HTML report
 ```
 
